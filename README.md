@@ -1,5 +1,9 @@
 # asian-recipes-webapp
 
+## Recipe data table
+
+![recipes](https://i.imgur.com/s4quKd1.png)
+
 Name = CharField() <br/>
 Origin = CharField() <br/>
 Ingredients = TextField() <br/>
