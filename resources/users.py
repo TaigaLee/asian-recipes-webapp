@@ -4,7 +4,7 @@ from flask import Blueprint, request, jsonify
 from flask_bcrypt import generate_password_hash, check_password_hash
 
 from playhouse.shortcuts import model_to_dict
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 
 users = Blueprint('users', 'users')
@@ -91,7 +91,7 @@ def login():
 
 
 #logged in user helper route
-# 
+#
 # @users.route('/logged_in_user', methods=['GET'])
 # def get_logged_in_user():
 #     print(current_user)
@@ -112,6 +112,44 @@ def login():
 #             message="Currently logged in as {}".format(user_dict['email']),
 #             status=200
 #         ), 200
+
+
+@users.route('/<id>', methods=['PUT'])
+@login_required
+def update_user(id):
+    payload = request.get_json()
+
+    user_to_update = models.User.get_by_id(id)
+
+    if user_to_update.id == current_user.id:
+        if 'username' in payload:
+            user_to_update.username = payload['username']
+        if 'email' in payload:
+            user_to_update.password = payload['email']
+        if 'password' in payload:
+            pw_hash = generate_password_hash(payload['password'])
+            user_to_update.password = payload['password']
+
+        user_to_update.save()
+
+        updated_user_dict = model_to_dict(user_to_update)
+
+        updated_user_dict.pop('password')
+
+        return jsonify(
+            data=updated_user_dict,
+            message="Successfully updated user with id {}".format(id),
+            status=200
+        ), 200
+
+    else:
+        return jsonify(
+            data={},
+            message="You're not the account owner.",
+            status=403
+        ), 403
+
+
 
 @users.route('/logout', methods=['GET'])
 def logout():
