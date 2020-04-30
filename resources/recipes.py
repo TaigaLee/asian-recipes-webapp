@@ -41,6 +41,8 @@ def create_recipe():
 
     recipe_dict['poster'].pop('password')
 
+    print(recipe_dict)
+
     return jsonify(
         data=recipe_dict,
         message="Successfully created recipe!",
@@ -53,7 +55,6 @@ def create_recipe():
 @recipes.route('/<id>', methods=['DELETE'])
 @login_required
 def delete_recipe(id):
-
     try:
         recipe_to_delete = models.Recipe.get_by_id(id)
 
@@ -75,10 +76,12 @@ def delete_recipe(id):
             ), 403
 
     except models.DoesNotExist:
-        return jsonify(
-            data={},
-            message="There's no recipe with that ID",
-            status=404
+      return jsonify(
+        data={
+          'error': '404 Not found'
+          },
+          message="There is no recipe with that ID.",
+          status=404
         ), 404
 
 
