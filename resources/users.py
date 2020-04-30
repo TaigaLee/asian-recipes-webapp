@@ -149,6 +149,36 @@ def update_user(id):
             status=403
         ), 403
 
+@users.route('/<id>', methods=['DELETE'])
+@login_required
+def delete_user(id):
+    try:
+
+        user_to_delete = models.User.get_by_id(id)
+
+        if user_to_delete.id == current_user.id:
+            user_to_delete.delete_instance()
+
+            return jsonify(
+                data={},
+                message="Successfully deleted user with id {}".format(id),
+                status=200
+            ), 200
+
+        else:
+
+            return jsonify(
+                data={},
+                message="You're not the account owner",
+                status=403
+                ), 403
+
+    except models.DoesNotExist:
+        return jsonify(
+            data={},
+            message="There is no user with this id",
+            status=404
+        ), 404
 
 
 @users.route('/logout', methods=['GET'])
