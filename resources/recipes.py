@@ -85,3 +85,15 @@ def update_recipe(id):
         message="Successfully updated the recipe with id of {}".format(id),
         status = 200
     ), 200
+
+@recipes.route('/<id>', methods=['GET'])
+def show_recipe(id):
+    recipe = models.Recipe.get_by_id(id)
+
+    recipe_dict = model_to_dict(recipe)
+
+    return jsonify(
+        data=recipe_dict,
+        message="Found recipe with id of {}".format(id),
+        status=200
+    ), 200
