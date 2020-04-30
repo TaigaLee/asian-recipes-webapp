@@ -2,7 +2,7 @@
 
 ## Data tables
 
-![data tables](https://i.imgur.com/2p1rFbk.png)
+![data tables](https://i.imgur.com/7sUz2Kn.png)
 
 # Routes
 
