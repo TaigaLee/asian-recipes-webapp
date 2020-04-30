@@ -1,22 +1,8 @@
 # asian-recipes-webapp
 
-## Recipe data table
+## Data tables
 
-![recipes](https://i.imgur.com/s4quKd1.png)
-
-Name = CharField() <br/>
-Origin = CharField() <br/>
-Ingredients = TextField() <br/>
-Instructions = TextField() <br/>
-(maybe) Time created = DateField()/TimeField()
-
-## Users data table
-
-![users](https://i.imgur.com/jtoHImQ.png)
-
-Username = CharField() <br/>
-email = CharField() <br/>
-Password = CharField() <br/>
+![data tables](https://i.imgur.com/2p1rFbk.png)
 
 # Routes
 
