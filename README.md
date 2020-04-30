@@ -6,10 +6,12 @@
 
 # Routes
 
-/recipes <br/>
-/users/login <br/>
-/users/register <br/>
-/users/logout <br/>
-/recipes/ (POST) <br/>
-/recipes/update (update) <br/>
-/recipes (delete)
+/recipes (Shows the most recent recipes, will include a search bar at the top so users can search for whatever they want)<br/>
+/users/login (Login page for users) <br/>
+/users/register (Registration page for users) <br/>
+/users/logout (Logout route for users) <br/>
+/users/edit (Users will be able to update and delete their account here) <br />
+/recipes/ (A page to post submit recipes) <br/>
+/recipes/id (update the selected recipe if the user is the creator of that recipe) <br/>
+/recipes/id (delete the selected recipe if the user is the creator of that recipe)
+
