@@ -33,6 +33,16 @@
 
 ![recipes](https://i.imgur.com/s4quKd1.png)
 
+Name = CharField()
+Origin = CharField()
+Ingredients = TextField()
+Instructions = TextField()
+(maybe) Time created = DateField()/TimeField()
+
 ## Users data table
 
 ![users](https://i.imgur.com/jtoHImQ.png)
+
+Username = CharField()
+email = CharField()
+Password = CharField()
