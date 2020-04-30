@@ -43,3 +43,18 @@ def create_recipe():
         message="Successfully created recipe!",
         status=201
     ), 201
+
+
+# recipe destroy route
+
+@recipes.route('/<id>', methods=['DELETE'])
+def delete_recipe(id):
+        recipe_to_delete = models.Recipe.get_by_id(id)
+
+        recipe_to_delete.delete_instance()
+
+        return jsonify(
+            data={},
+            message="Successfully deleted recipe with the id of {}".format(id),
+            status=200
+        ), 200
