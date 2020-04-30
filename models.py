@@ -1,11 +1,21 @@
 from peewee import *
 import datetime
 
+from flask_login import UserMixin
+
 DATABASE = SqliteDatabase('recipes.sqlite')
+
+class User(UserMixin, Model):
+    username=CharField(unique=True)
+    email=CharField(unique=True)
+    password=CharField()
+
+    class Meta:
+        database = DATABASE
 
 class Recipe(Model):
     name = CharField()
-    poster = CharField() #temp
+    poster = ForeignKeyField(User, backref='recipes')
     origin = CharField()
     ingredients = TextField()
     instructions = TextField()
@@ -18,7 +28,7 @@ class Recipe(Model):
 def initialize():
     DATABASE.connect()
 
-    DATABASE.create_tables([Recipe], safe=True)
+    DATABASE.create_tables([Recipe, User], safe=True)
     print("Connected to database and created tables")
 
-    DATABASE.close() 
+    DATABASE.close()
