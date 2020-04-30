@@ -60,21 +60,20 @@ def login():
 
         user_dict = model_to_dict(user)
 
-        check_password = check_password_hash(user_dict['password'], payload['password'])
+        password_is_good = check_password_hash(user_dict['password'], payload['password'])
 
-        if (check_password):
+        if (password_is_good):
             login_user(user)
 
             user_dict.pop('password')
 
             return jsonify(
                 data=user_dict,
-                message=f"Successfully logged in {user_dict['username']}",
+                message="Successfully logged in {}".format(user_dict['username']),
                 status=200
             ), 200
 
         else:
-
             return jsonify(
                 data={},
                 message="Email or password is incorrect",
