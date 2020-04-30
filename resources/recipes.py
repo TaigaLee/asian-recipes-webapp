@@ -58,3 +58,30 @@ def delete_recipe(id):
             message="Successfully deleted recipe with the id of {}".format(id),
             status=200
         ), 200
+
+
+# update route
+@recipes.route('/<id>', methods=['PUT'])
+def update_recipe(id):
+    payload = request.get_json()
+
+    recipe_to_update = models.Recipe.get_by_id(id)
+
+    if 'name' in payload:
+        recipe_to_update.name = payload['name']
+    if 'origin' in payload:
+        recipe_to_update.origin = payload['origin']
+    if 'ingredients' in payload:
+        recipe_to_update.ingredients = payload['ingredients']
+    if 'instructions' in payload:
+        recipe_to_update.instructions = payload['instructions']
+
+    recipe_to_update.save()
+
+    updated_recipe_dict = model_to_dict(recipe_to_update)
+
+    return jsonify(
+        data=updated_recipe_dict,
+        message="Successfully updated the recipe with id of {}".format(id),
+        status = 200
+    ), 200
