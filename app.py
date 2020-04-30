@@ -2,10 +2,14 @@ from flask import Flask
 
 import models
 
+from resources.recipes import recipes
+
 DEBUG = True
 PORT = 8000
 
 app = Flask(__name__)
+
+app.register_blueprint(recipes, url_prefix='/api/v1/recipes')
 
 @app.route('/')
 def hello_world():
