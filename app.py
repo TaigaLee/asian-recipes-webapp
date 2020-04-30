@@ -3,8 +3,6 @@ from flask_login import LoginManager
 
 import models
 
-
-
 from resources.recipes import recipes
 from resources.users import users
 
@@ -12,6 +10,8 @@ DEBUG = True
 PORT = 8000
 
 app = Flask(__name__)
+
+app.secret_key = "THIS IS MY TOP SECRET SESSION KEY. oirhjowi3ehqypv40o"
 
 login_manager = LoginManager()
 
