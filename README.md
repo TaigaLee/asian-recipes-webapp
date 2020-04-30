@@ -11,5 +11,5 @@
 /users/register <br/>
 /users/logout <br/>
 /recipes/ (POST) <br/>
-/recipes/update (update) <br/>
-/recipes (delete)
+/recipes/id (update) <br/>
+/recipes/id (delete)
