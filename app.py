@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_login import LoginManager
+from flask_cors import CORS
 
 import models
 
@@ -33,6 +34,10 @@ def unauthorized():
         message = "You must be logged in to access that",
         status=401
     ), 401
+
+
+CORS(recipes, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
 
 app.register_blueprint(recipes, url_prefix='/api/v1/recipes')
 app.register_blueprint(users, url_prefix='/api/v1/users')
