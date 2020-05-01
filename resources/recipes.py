@@ -10,12 +10,13 @@ recipes = Blueprint('recipes', 'recipes')
 
 @recipes.route('/', methods=['GET'])
 def recipes_index():
-    result = models.Recipe.select().dicts()
-    recipes = [recipe for recipe in result]
+    result = models.Recipe.select()
+    recipes = [model_to_dict(recipe) for recipe in result]
 
     recipesLength = len(recipes)
 
-    print(recipes)
+    for recipe_dict in recipes:
+        recipe_dict['poster'].pop('password')
 
     return jsonify(
       data = recipes,
