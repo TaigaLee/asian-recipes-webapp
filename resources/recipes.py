@@ -102,6 +102,21 @@ def delete_recipe(id):
 
 
 
+@recipes.route('/<id>', methods=['GET'])
+@login_required
+def get_recipe(id):
+    recipe = models.Recipe.get_by_id(id)
+
+    recipe_dict = model_to_dict(recipe)
+    recipe_dict['poster'].pop('password')
+
+    return jsonify(
+        data=recipe_dict,
+        message="Found recipe with id {}".format(id),
+        status=200
+    ), 200
+
+
 # update route
 @recipes.route('/<id>', methods=['PUT'])
 @login_required
