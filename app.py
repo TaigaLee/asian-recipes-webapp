@@ -1,4 +1,5 @@
-from flask import Flask
+import os
+from flask import Flask, g
 from flask_login import LoginManager
 from flask_cors import CORS
 
@@ -36,15 +37,28 @@ def unauthorized():
     status = 401
   ), 401
 
-CORS(recipes, origins=['http://localhost:3000'], supports_credentials=True)
-CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(recipes, origins=['https://miso-happy-react.herokuapp.com/'], supports_credentials=True)
+CORS(users, origins=['https://miso-happy-react.herokuapp.com/'], supports_credentials=True)
+
 
 app.register_blueprint(recipes, url_prefix='/api/v1/recipes')
 app.register_blueprint(users, url_prefix='/api/v1/users')
 
-@app.route('/')
-def hello_world():
-  return "Hello world!"
+@app.before_request
+def before_request():
+  g.db = models.DATABASE
+  g.db.connect()
+
+
+@app.after_request
+def after_request(response):
+  print("you should see this after each request")
+  g.db.close()
+  return response
+
+if 'ON_HEROKU' in os.environ:
+  print('\non heroku!')
+  models.initialize()
 
 if __name__ == '__main__':
   models.initialize()

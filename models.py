@@ -1,9 +1,15 @@
+impost os
 from peewee import *
 import datetime
 
 from flask_login import UserMixin
 
-DATABASE = SqliteDatabase('recipes.sqlite')
+from playhouse.db_url import connect
+
+if 'ON_HEROKU' in os.environ:
+    DATABASE = connect(os.environ.get('postgres://mrhydmvthmufgn:0af25c53734478902c2165457f06bdf63ac0a1147966267f8e3888569e207b9c@ec2-34-204-22-76.compute-1.amazonaws.com:5432/daiq81k4e1kr0n'))
+else:
+    DATABASE = SqliteDatabase('recipes.sqlite')
 
 class User(UserMixin, Model):
     username=CharField(unique=True)
