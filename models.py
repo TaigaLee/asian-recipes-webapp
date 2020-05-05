@@ -1,4 +1,4 @@
-impost os
+import os
 from peewee import *
 import datetime
 
