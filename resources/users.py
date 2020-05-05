@@ -64,7 +64,6 @@ def login():
 
         if (password_is_good):
             login_user(user)
-
             user_dict.pop('password')
 
             return jsonify(
@@ -89,30 +88,6 @@ def login():
         ), 401
 
 
-#logged in user helper route
-#
-# @users.route('/logged_in_user', methods=['GET'])
-# def get_logged_in_user():
-#     print(current_user)
-#
-#     if not current_user.is_authenticated:
-#         return jsonify(
-#             data={},
-#             message="No user is currently logged in",
-#             status=401,
-#         ), 401
-#
-#     else:
-#         user_dict = model_to_dict(current_user)
-#         user_dict.pop('password')
-#
-#         return jsonify(
-#             data=user_dict,
-#             message="Currently logged in as {}".format(user_dict['email']),
-#             status=200
-#         ), 200
-
-
 @users.route('/<id>', methods=['PUT'])
 @login_required
 def update_user(id):
@@ -124,10 +99,10 @@ def update_user(id):
         if 'username' in payload:
             user_to_update.username = payload['username']
         if 'email' in payload:
-            user_to_update.password = payload['email']
+            user_to_update.email = payload['email']
         if 'password' in payload:
             pw_hash = generate_password_hash(payload['password'])
-            user_to_update.password = payload['password']
+            user_to_update.password = pw_hash
 
         user_to_update.save()
 
@@ -155,6 +130,11 @@ def delete_user(id):
 
         user_to_delete = models.User.get_by_id(id)
 
+        user_recipes = current_user.recipes
+
+        for recipe in user_recipes:
+            recipe.delete_instance()
+
         if user_to_delete.id == current_user.id:
             user_to_delete.delete_instance()
 
@@ -163,6 +143,8 @@ def delete_user(id):
                 message="Successfully deleted user with id {}".format(id),
                 status=200
             ), 200
+
+
 
         else:
 

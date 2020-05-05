@@ -20,21 +20,21 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    try:
-        return models.User.get_by_id(user_id)
-
-    except models.DoesNotExist:
-        return None
+  try:
+    return models.User.get_by_id(user_id)
+  except models.DoesNotExist:
+    return None
 
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return jsonify(
-        data={},
-        message = "You must be logged in to access that",
-        status=401
-    ), 401
-
+  return jsonify(
+    data={
+    "error": "Not logged in"
+    },
+    message = "You must be logged in!",
+    status = 401
+  ), 401
 
 CORS(recipes, origins=['http://localhost:3000'], supports_credentials=True)
 CORS(users, origins=['http://localhost:3000'], supports_credentials=True)
@@ -44,8 +44,8 @@ app.register_blueprint(users, url_prefix='/api/v1/users')
 
 @app.route('/')
 def hello_world():
-    return "Hello world!"
+  return "Hello world!"
 
 if __name__ == '__main__':
-    models.initialize()
-    app.run(debug=DEBUG, port=PORT)
+  models.initialize()
+  app.run(debug=DEBUG, port=PORT)

@@ -8,6 +8,21 @@ from flask_login import current_user, login_required
 
 recipes = Blueprint('recipes', 'recipes')
 
+@recipes.route('/users_recipes', methods=['GET'])
+@login_required
+def recipe_index():
+    current_user_recipe_dicts = [model_to_dict(recipe) for recipe in current_user.recipes]
+
+    for recipe_dict in current_user_recipe_dicts:
+        recipe_dict['poster'].pop('password')
+
+    return jsonify(
+        data= current_user_recipe_dicts,
+        message= "Successfully found user's recipes",
+        status= 200
+    ), 200
+
+
 @recipes.route('/', methods=['GET'])
 def recipes_index():
     result = models.Recipe.select()
