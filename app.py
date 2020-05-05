@@ -37,8 +37,8 @@ def unauthorized():
     status = 401
   ), 401
 
-CORS(recipes, origins=['https://miso-happy-react.herokuapp.com/'], supports_credentials=True)
-CORS(users, origins=['https://miso-happy-react.herokuapp.com/'], supports_credentials=True)
+CORS(recipes, origins=['https://miso-happy-react.herokuapp.com'], supports_credentials=True)
+CORS(users, origins=['https://miso-happy-react.herokuapp.com'], supports_credentials=True)
 
 
 app.register_blueprint(recipes, url_prefix='/api/v1/recipes')
