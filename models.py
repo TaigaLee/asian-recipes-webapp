@@ -19,6 +19,7 @@ class Recipe(Model):
     origin = CharField()
     ingredients = TextField()
     instructions = TextField()
+    image = TextField()
     created_at = DateTimeField(default=datetime.datetime.now)
 
     class Meta:

@@ -49,6 +49,7 @@ def create_recipe():
         name=payload['name'],
         poster=current_user.id,
         origin=payload['origin'],
+        image=payload['image'],
         ingredients=payload['ingredients'],
         instructions=payload['instructions'],
     )
